@@ -1,0 +1,32 @@
+<mdb-card>
+  <mdb-card-body id="poll-card">
+
+    <mdb-card-title>
+      <p class="h1">{{this.poll.title}}</p>
+    </mdb-card-title>
+
+    <div *ngFor="let option of this.poll.optionValues; index as i; trackBy: trackByFn"
+          class="mb-3 p-4 rounded" id="option-card"
+          (click)="onOptionSelected(i)"
+          [ngClass]="{'option-selected' : this.votes[i], 'option-unselected' : !this.votes[i]}">
+      <div>
+        <div class="flex-space-between">
+          <mat-checkbox class="poll-option text-large text-black" color="primary" *ngIf="this.poll.type == this.CHECKBOX"
+              (click)="noClick($event)" [(ngModel)]="this.votes[i]">{{option}}</mat-checkbox>
+          <p class="text-large text-black">{{this.votePct[i]}}</p>
+        </div>
+        <mat-radio-button class="poll-option text-large text-black" color="primary" *ngIf="this.poll.type == this.RADIO"
+            [(ngModel)]="this.votes[i]">{{option}}</mat-radio-button>
+        <p class="text-gray">Votes: {{this.poll.optionVotes[i]}}</p>
+        <mat-progress-bar class="mb-0" color="primary" [value]="this.poll.optionVotes[i]"></mat-progress-bar>
+
+      </div>
+    </div>
+
+    <div class="flex-space-between">
+      <button class="btn-lg btn-p primary-blue"
+              (click)="onSaveAnswer()">Vote</button>
+    </div>
+
+  </mdb-card-body>
+</mdb-card>

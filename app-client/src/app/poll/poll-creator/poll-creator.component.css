@@ -1,0 +1,17 @@
+#titleSub {
+  color: grey;
+}
+
+
+
+.border-blue {
+  border-style: solid !important;
+  border-width: 1px !important;
+  border-color:rgb(0,123,255) !important;
+  box-shadow: 0 2px 5px 0 rgba(0,123,255,.16), 0 2px 10px 0 rgba(0,123,255,.12) !important;
+  background-color: white !important;
+}
+
+.input-text {
+  font-size: 1.25rem;
+}

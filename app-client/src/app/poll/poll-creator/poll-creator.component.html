@@ -1,0 +1,20 @@
+<p class="h1">Create a poll</p>
+<p id="titleSub" class="h5">Enter the fields below to create your poll</p>
+<div class="md-form">
+  <p class="font-weight-bold mb-1 text-gray">Poll Question</p>
+  <textarea id="form7" class="md-textarea form-control border-blue rounded p-0 pl-2 pt-2 p-large"
+            placeholder="Ex. Who is your favorite character?" rows="3" [(ngModel)]="this.poll.title"></textarea>
+
+
+  <div *ngFor="let option of this.poll.optionValues; index as i; trackBy: trackByFn" class="full-width md-form">
+    <p class="font-weight-bold text-gray mb-1">Poll Option</p>
+    <input type="text" [id]="'Option ' + (i+1)" class="form-control border-blue rounded pl-2 form-control-lg p-large"
+           [placeholder]="'Eg. Option ' + (i+1)" [(ngModel)]="this.poll.optionValues[i]">
+  </div>
+
+  <button class="btn-lg btn-p primary-blue mr-4"
+    (click)="onAddOption()">Add Option</button>
+
+  <button class="btn-lg btn-p primary-green mr-2"
+    (click)="onSavePoll()">Create Poll</button>
+</div>

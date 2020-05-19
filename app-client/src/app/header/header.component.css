@@ -1,0 +1,11 @@
+::ng-deep .navbar {
+  min-height: 80px;
+}
+
+::ng-deep .navbar-brand {
+  font-size: 1.75rem;
+}
+
+::ng-deep .btn-p:first-child {
+  color: white;
+}
