@@ -28,17 +28,17 @@ public class ThreadReply {
     @JsonProperty("createdDateTime")
     public LocalDateTime createdDateTime = LocalDateTime.now();
 
-    @JsonProperty("replyChildren")
-    @ElementCollection
-    public List<Long> replyChildrenIds;
+    @JsonProperty("childReplies")
+    @OneToMany()
+    public List<ThreadReply> childReplies;
 
     public ThreadReply() {}
 
-    public ThreadReply(PollThread pollThreadId, User user, String replyContent, List<Long> replyChildrenIds) {
+    public ThreadReply(PollThread pollThreadId, User user, String replyContent, List<ThreadReply> childReplies) {
         this.pollThreadId = pollThreadId;
         this.user = user;
         this.replyContent = replyContent;
-        this.replyChildrenIds = replyChildrenIds;
+        this.childReplies = childReplies;
     }
 
 }

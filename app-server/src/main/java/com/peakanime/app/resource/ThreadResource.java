@@ -36,7 +36,7 @@ public class ThreadResource {
         PollThread pollThread = new PollThread();
         ThreadReply rootReply = new ThreadReply(pollThread, null,"This is root node", null);
         pollThread.rootReply = rootReply;
-        pollThread.rootReply.replyChildrenIds = new ArrayList<>();
+        pollThread.rootReply.childReplies = new ArrayList<>();
         pollThreadRepository.save(pollThread);
 
         return pollThread;
@@ -61,7 +61,7 @@ public class ThreadResource {
         ThreadReply parentReply = threadReplyRepository.findById(parentId).get();
         threadReplyRepository.save(threadReply);
 
-        parentReply.replyChildrenIds.add(threadReply.id);
+        parentReply.childReplies.add(threadReply);
         threadReplyRepository.save(parentReply);
 
         return threadReply;
