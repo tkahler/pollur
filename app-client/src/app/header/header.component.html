@@ -1,6 +1,6 @@
-<mdb-navbar SideClass="navbar navbar-expand-lg navbar-light white ie-nav" [containerInside]="false">
+<mdb-navbar class="fixed-top" SideClass="navbar navbar-expand-lg navbar-light white ie-nav" [containerInside]="false">
   <mdb-navbar-brand>
-    <a class="logo navbar-brand text-blue" href="#"><strong>Pollure</strong></a>
+    <a class="logo navbar-brand text-blue" href="#"><strong>Pollur</strong></a>
   </mdb-navbar-brand>
   <links>
     <!-- Links -->
@@ -15,13 +15,39 @@
 
     </ul>
 
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item waves-light mr-1 p-1" mdbWavesEffect>
-        <a class="nav-link p-large" routerLink="/login" routerLinkActive="active">Login</a>
+    <ul *ngIf="!authService.userAuthenticated" class="navbar-nav ml-auto">
+      <li class="nav-item waves-light mr-1" mdbWavesEffect>
+        <button  mdbBtn type="button" color="primary" outline="true"
+                 (click)="login()" routerLinkActive="active">Log in</button>
       </li>
-      <li class="nav-item waves-light primary-blue rounded p-1" mdbWavesEffect>
-        <a class="nav-link p-large text-white"  routerLink="/create-account" routerLinkActive="active"><strong>Create Account</strong></a>
+      <li class="nav-item waves-light mr-1" mdbWavesEffect>
+        <button mdbBtn type="button" color="primary"
+                (click)="signUp()" routerLinkActive="active">Sign up</button>
       </li>
     </ul>
+
+    <ul *ngIf="authService.userAuthenticated" class="navbar-nav ml-auto">
+      <li class="mr-1">
+
+        <span class="navbar-text">
+                {{authService.username}}
+          </span>
+      </li>
+    </ul>
+
+    <ul  *ngIf="authService.userAuthenticated"  class="navbar-nav nav-flex-icons">
+
+      <li class="nav-item">
+        <a class="nav-link">
+          <div class="btn-group" mdbDropdown>
+            <mdb-icon fas icon="user"  classInside="dropdown-toggle" id="nav-user-circle" mdbDropdownToggle></mdb-icon>
+            <div class="dropdown-menu dropdown-menu-right dropdown-primary">
+              <a class="dropdown-item" href="/home" (click)="logout()">Log out</a>
+            </div>
+          </div>
+        </a>
+      </li>
+    </ul>
+
   </links>
 </mdb-navbar>

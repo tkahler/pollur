@@ -1,0 +1,11 @@
+#poll-list-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 15px;
+  width:100%;
+  margin-left: auto;
+  margin-right: auto;
+}

@@ -1,5 +1,8 @@
-spring:
-  profiles: dev
 
 server:
   port : 8081
+
+spring:
+  h2:
+    console:
+      enabled: true
