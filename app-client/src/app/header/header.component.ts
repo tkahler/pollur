@@ -1,4 +1,7 @@
 import {Component} from '@angular/core';
+import {AuthService} from '../shared/auth.service';
+import {ModalService} from '../shared/modal.service';
+import {LoginComponent} from '../login/login.component';
 
 @Component({
   selector: 'app-header',
@@ -6,6 +9,21 @@ import {Component} from '@angular/core';
   styleUrls: ['./header.component.css', '../app.component.css'],
 })
 
-export class headerComponent {
+export class HeaderComponent {
 
+
+  constructor(public authService: AuthService, private modalService: ModalService) {
+  }
+
+  logout() {
+    this.authService.setUserAuthenticated(false, '');
+  }
+
+  login() {
+    this.modalService.open(LoginComponent.modalId, {isLogin: true});
+  }
+
+  signUp() {
+    this.modalService.open(LoginComponent.modalId, {isLogin: false});
+  }
 }

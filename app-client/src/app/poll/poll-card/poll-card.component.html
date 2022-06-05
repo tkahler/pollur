@@ -1,0 +1,37 @@
+<mdb-card>
+  <mdb-card-body id="poll-card">
+
+    <mdb-card-title >
+      <div id="poll-card-title">
+        <p class="h2">{{this.poll.title}}</p>
+        <p class="d-inline">by </p>
+        <p class="text-primary d-inline">u/{{this.poll.author.username}}</p>
+      </div>
+    </mdb-card-title>
+
+    <mat-radio-group [(ngModel)]="this.userVote.optionIndex">
+      <div *ngFor="let option of this.poll.optionValues; index as i; trackBy: trackByFn"
+            class="rounded poll-option p-2"
+            (click)="onOptionSelected(i)">
+        <div>
+          <mat-radio-button *ngIf="this.poll.userPollVote.optionIndex === -1" color="primary" [value]="i">{{option}}</mat-radio-button>
+          <div *ngIf="this.poll.userPollVote.optionIndex !== -1">
+            <mat-progress-bar class="mb-0 rounded" color="accent" [value]="this.votePct[i]"></mat-progress-bar>
+            <p class="pct-option">{{this.poll.optionValues[i]}}</p>
+            <p class="vote-pct-bar">{{this.votePct[i] + "% (" + this.poll.optionVotes[i] + ")"}}</p>
+          </div>
+        </div>
+      </div>
+    </mat-radio-group>
+
+    <div id="poll-card-footer">
+      <button *ngIf="this.poll.userPollVote.optionIndex === -1" class="rounded-lg ml-0" type="button" mdbBtn
+              color="primary" mdbWavesEffect (click)="onVote()">Vote</button>
+      <button *ngIf="this.poll.userPollVote.optionIndex !== -1" class="rounded-lg ml-0" type="button" mdbBtn
+              color="primary" outline="true" mdbWavesEffect (click)="removeVote()">Revote</button>
+    </div>
+
+
+
+  </mdb-card-body>
+</mdb-card>

@@ -9,3 +9,12 @@
 ::ng-deep .btn-p:first-child {
   color: white;
 }
+
+.navbar-text {
+  font-size: 25px;
+  margin-left: 5px;
+}
+
+#nav-user-circle {
+  font-size: 25px;
+}

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {Poll} from "../../domain/poll";
-import {PollService} from "../poll.service";
+import {Poll} from '../../models/poll';
+import {PollService} from '../poll.service';
 
 @Component({
   selector: 'app-poll-creator',
@@ -12,18 +12,17 @@ import {PollService} from "../poll.service";
 export class PollCreatorComponent {
   public poll: Poll = null;
 
-  constructor(private pollCreatorService: PollService) {
-    this.poll = Poll.defaultConstructor();
+  constructor(private pollService: PollService) {
+    this.poll = new Poll();
   }
 
   onAddOption() {
-    let numOfOptions = this.poll.optionVotes.length;
-    this.poll.optionValues.push("");
+    this.poll.optionValues.push('');
     this.poll.optionVotes.push(0);
   }
 
   onSavePoll() {
-    this.pollCreatorService.savePoll(this.poll).subscribe(poll => console.log(poll));
+    this.pollService.savePoll(this.poll).subscribe(poll => console.log(poll));
   }
 
   trackByFn(index, item) {
