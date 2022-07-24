@@ -1,7 +1,7 @@
 
 # Pollur.io 
 
-[Pollur.io](Pollur.io) is a prototype for a poll based social media site.
+[Pollur.io](https://Pollur.io) is a prototype for a poll based social media site.
 
 ## Features
 
