@@ -95,11 +95,13 @@ public class PollController {
     }
 
     //cast vote on poll
-    //idempotent create/update of a user vote
-    @PutMapping(value="/vote")
+    //Creates user vote history, if user already voted on poll updates user vote
+    //Related poll option vote count is updated
+    @PostMapping(value="/vote")
     @ResponseStatus(HttpStatus.CREATED)
     public UserPollVoteDTO voteOnPoll(@RequestBody() UserPollVoteDTO userPollVoteDTO) {
 
+        //TODO move this to service layer
         User user = securityService.getAuthenticatedUser();
         Poll pollVotedOn = pollRepository.findById(userPollVoteDTO.pollId).orElseThrow(ResourceNotFoundException::new);
         UserPollVoteHistory userVote = userPollVoteHistoryRepository.findByUserIdAndPollId(user.id, userPollVoteDTO.pollId);

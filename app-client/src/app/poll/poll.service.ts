@@ -82,7 +82,7 @@ export class PollService {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
-    return this.http.put<PollVote>('/api/poll/vote', pollVote, httpOptions).pipe(
+    return this.http.post<PollVote>('/api/poll/vote', pollVote, httpOptions).pipe(
       map(data => new PollVote().deserialize(data))
     );
   }
