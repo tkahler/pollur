@@ -47,3 +47,12 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+task zip(type: Zip, dependsOn: bootJar) {
+	from('build/libs') {
+		include  "${project.name}-${project.version}.jar"
+	}
+	from 'beanstalkconfig'
+}
+
+build.dependsOn(zip)

@@ -3,7 +3,7 @@ HELP.md
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/test/**
-/src/main/resources/public/01.png
+/src/main/resources/public/
 data/
 
 ### STS ###
