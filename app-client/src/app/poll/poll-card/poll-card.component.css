@@ -66,4 +66,10 @@ mat-progress-bar {
   margin-bottom: 0;
 }
 
+.card-left-body {
+  width: 80px;
+  display: inline-block;
+  padding-top: 10px;
+}
+
 

@@ -16,6 +16,7 @@ export class LoginComponent implements AfterViewInit, ModalComponent {
   public static modalId = 'loginModal';
 
   public isLogin = true;
+  public refreshOnSuccessfulLogin = false;
 
   public authData: Auth = new Auth();
   public errorMsg: string;
@@ -34,6 +35,9 @@ export class LoginComponent implements AfterViewInit, ModalComponent {
     this.loginService.login(this.authData.username, this.authData.password).subscribe(token => {
       this.authService.setAuthToken(token);
       this.modalDirective.hide();
+      if (this.refreshOnSuccessfulLogin) {
+        location.reload();
+      }
     }, () => {
       this.errorMsg = 'Username or Password was incorrect';
     });

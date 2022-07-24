@@ -10,14 +10,11 @@ import {Poll} from '../../models/poll';
   providers: [PollService]
 })
 
-export class PollContainerComponent implements  OnInit{
+export class PollContainerComponent {
 
   public poll: Poll;
 
   constructor(private routes: ActivatedRoute, private pollService: PollService) {
-  }
-
-  ngOnInit() {
     this.routes.paramMap.subscribe(params => {
       const pollId = params.get('pollId');
       this.pollService.getPoll(pollId).subscribe(poll => {
@@ -25,4 +22,5 @@ export class PollContainerComponent implements  OnInit{
       });
     });
   }
+
 }

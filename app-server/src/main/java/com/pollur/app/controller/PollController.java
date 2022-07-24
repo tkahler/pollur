@@ -1,8 +1,9 @@
 package com.pollur.app.controller;
 
-import com.pollur.app.domain.Poll;
+import com.pollur.app.domain.poll.Poll;
 import com.pollur.app.domain.User;
-import com.pollur.app.domain.UserPollVoteHistory;
+import com.pollur.app.domain.poll.SortByEnum;
+import com.pollur.app.domain.poll.UserPollVoteHistory;
 import com.pollur.app.domain.dto.PollDTO;
 import com.pollur.app.domain.dto.UserPollVoteDTO;
 import com.pollur.app.domain.exception.UnauthorizedException;
@@ -10,8 +11,9 @@ import com.pollur.app.mapper.PollMapper;
 import com.pollur.app.repository.PollRepository;
 import com.pollur.app.repository.UserPollVoteHistoryRepository;
 import com.pollur.app.domain.exception.ResourceNotFoundException;
+import com.pollur.app.service.PollService;
 import com.pollur.app.service.SecurityService;
-import com.pollur.app.domain.TimeFilterEnum;
+import com.pollur.app.domain.poll.TimeFilterEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -38,6 +40,9 @@ public class PollController {
     @Autowired
     SecurityService securityService;
 
+    @Autowired
+    PollService pollService;
+
     @GetMapping("/{id}")
     public PollDTO getPollById(@PathVariable Long id) {
         User user = securityService.getAuthenticatedUser();
@@ -52,16 +57,30 @@ public class PollController {
 
 
     @GetMapping()
-    public List<PollDTO> getPollsByPage(@RequestParam("t") TimeFilterEnum timeFilter, @RequestParam("page") int page) {
+    public List<PollDTO> getPollsByPage(@RequestParam(value = "t", required = false) TimeFilterEnum timeFilter,
+                                        @RequestParam("page") int page, @RequestParam("sortBy") SortByEnum sortBy,
+                                        @RequestParam(value = "author", required = false) String authorUsername,
+                                        @RequestParam(value = "participatedBy", required = false) String participatedUsername) {
         User user = securityService.getAuthenticatedUser();
 
-        Pageable pageRequest = PageRequest.of(page - 1, 20, Sort.by("createdDateTime").descending());
-        List<Poll> polls = pollRepository.findByCreatedDateTimeGreaterThan(timeFilter.getFilterDateTime(), pageRequest);
+        if(timeFilter == null) {
+            timeFilter = TimeFilterEnum.YEAR;
+        }
+        Pageable pageRequest = PageRequest.of(page - 1, 3, Sort.by(sortBy.sortField).descending());
+        List<Poll> polls = new ArrayList<>();
+
+        if(authorUsername != null) {
+            polls = pollRepository.findByCreatedDateTimeAndAuthorUserId(authorUsername, timeFilter.getFilterDateTime(), pageRequest);
+        } else if (participatedUsername != null) {
+            polls = pollRepository.findPollByVoteUserId(participatedUsername, timeFilter.getFilterDateTime(), pageRequest);
+        } else {
+            polls = pollRepository.findByCreatedDateTimeGreaterThan(timeFilter.getFilterDateTime(), pageRequest);
+        }
 
         List<UserPollVoteHistory> votes = new ArrayList<>();
         if (user != null) {
             List<Long> pollIds = polls.stream().map(poll -> {return poll.id;}).collect(Collectors.toList());
-           votes = userPollVoteHistoryRepository.findAllByUserIdAndPollIds(user.id, pollIds);
+            votes = userPollVoteHistoryRepository.findAllByUserIdAndPollIds(user.id, pollIds);
         }
 
         return PollMapper.pollsAndVotesTODTO(polls, votes);
@@ -69,14 +88,10 @@ public class PollController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public void savePoll(@RequestBody Poll poll) {
-        pollRepository.save(poll);
-    }
+    public PollDTO createPoll(@RequestBody() PollDTO pollDTO) {
+        User user = securityService.getAuthenticatedUser();
+        return pollService.createPoll(user, pollDTO);
 
-    @PutMapping()
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public void updatePoll(@RequestBody Poll poll) {
-        pollRepository.save(poll);
     }
 
     //cast vote on poll

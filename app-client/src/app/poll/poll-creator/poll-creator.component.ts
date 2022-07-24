@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {Poll} from '../../models/poll';
 import {PollService} from '../poll.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-poll-creator',
@@ -12,17 +13,51 @@ import {PollService} from '../poll.service';
 export class PollCreatorComponent {
   public poll: Poll = null;
 
-  constructor(private pollService: PollService) {
+  public pollValidationErrors = {title: '', options: ['', '', '', '', '', '']};
+
+  constructor(private pollService: PollService, private router: Router) {
     this.poll = new Poll();
+    // all polls should have at least 2 options
+    this.poll.addOption('');
+    this.poll.addOption('');
+
   }
 
   onAddOption() {
-    this.poll.optionValues.push('');
-    this.poll.optionVotes.push(0);
+    this.poll.addOption('');
+  }
+
+  onRemoveOption(index: number) {
+    this.poll.removeOptionByIndex(index);
   }
 
   onSavePoll() {
-    this.pollService.savePoll(this.poll).subscribe(poll => console.log(poll));
+    if (this.validatePoll()) {
+      this.pollService.createPoll(this.poll).subscribe(poll => {
+        this.router.navigate(['/poll/' + poll.id]).then();
+      });
+    }
+  }
+
+  validatePoll() {
+    // reset validation errors
+    this.pollValidationErrors.title = '';
+    this.pollValidationErrors.options.splice(0, this.pollValidationErrors.options.length);
+
+    let isValid = true;
+    if (!this.poll.title) {
+      this.pollValidationErrors.title = 'Question cannot be empty';
+      isValid = false;
+    }
+
+    this.poll.optionValues.forEach((val, index) => {
+      if (!val) {
+        this.pollValidationErrors.options[index] = 'Option cannot be empty';
+        isValid = false;
+      }
+    });
+
+    return isValid;
   }
 
   trackByFn(index, item) {

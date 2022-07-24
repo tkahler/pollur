@@ -1,7 +1,7 @@
 package com.pollur.app.mapper;
 
-import com.pollur.app.domain.Poll;
-import com.pollur.app.domain.UserPollVoteHistory;
+import com.pollur.app.domain.poll.Poll;
+import com.pollur.app.domain.poll.UserPollVoteHistory;
 import com.pollur.app.domain.dto.PollDTO;
 import com.pollur.app.domain.dto.UserPollVoteDTO;
 
@@ -18,6 +18,7 @@ public class PollMapper {
         pollDTO.optionValues = new ArrayList<>(poll.optionValues);
         pollDTO.popularity = poll.getPopularity();
         pollDTO.commentCount = poll.commentCount;
+        pollDTO.createdDateTime = poll.createdDateTime.toString();
 
         if(userPollVoteHistory != null) {
             pollDTO.userPollVote = new UserPollVoteDTO(userPollVoteHistory.id, poll.id, userPollVoteHistory.optionIndex);

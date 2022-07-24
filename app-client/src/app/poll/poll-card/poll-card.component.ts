@@ -6,6 +6,7 @@ import {PollVote} from '../../models/poll-vote';
 import {ActivatedRoute} from '@angular/router';
 import {ModalService} from '../../shared/modal.service';
 import {LoginComponent} from '../../login/login.component';
+import {VotePipe} from '../../shared/vote.pipe';
 
 @Component({
   selector: 'app-poll-card',
@@ -18,17 +19,23 @@ export class PollCardComponent implements OnChanges {
   @Input()
   public poll: Poll;
 
+  @Input()
+  public minimized: boolean;
+
   public votePct: number[] = [];
   public userVote: PollVote;
 
   constructor(private pollService: PollService, private routes: ActivatedRoute, private modalService: ModalService) {
+    this.minimized = false;
   }
 
   ngOnChanges() {
-    this.userVote = PollVote.copy(this.poll.userPollVote);
-    this.userVote.pollId = this.poll.id;
+    if (this.poll) {
+      this.userVote = PollVote.copy(this.poll.userPollVote);
+      this.userVote.pollId = this.poll.id;
 
-    this.setVotePercentages();
+      this.setVotePercentages();
+    }
   }
 
 
@@ -55,7 +62,7 @@ export class PollCardComponent implements OnChanges {
 
     }, error => {
       if (error.status === 401) {
-        this.modalService.open(LoginComponent.modalId);
+        this.modalService.open(LoginComponent.modalId, {refreshOnSuccessfulLogin: true});
       }
     });
   }

@@ -15,7 +15,7 @@ import { PollCardComponent } from './poll/poll-card/poll-card.component';
 import { HeaderComponent } from './header/header.component';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatNativeDateModule} from '@angular/material/core';
+import {MatNativeDateModule, MatOptionModule} from '@angular/material/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material-module';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
@@ -28,6 +28,13 @@ import {LoginService} from './login/login.service';
 import {AuthService} from './shared/auth.service';
 import {AuthInterceptor} from './shared/auth-interceptor';
 import {UserService} from './shared/user.service';
+import {InfiniteScrollComponent} from './shared/infinite-scroll.component';
+import {PollListFilterComponent} from './poll/poll-list/poll-list-filter.component';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatMenuModule} from '@angular/material/menu';
+import {VotePipe} from './shared/vote.pipe';
+import {UserProfileComponent} from './profile/user-profile.component';
+import {PollListContainerComponent} from './poll/poll-list/poll-list-container.component';
 
 
 @NgModule({
@@ -39,6 +46,11 @@ import {UserService} from './shared/user.service';
     PollContainerComponent,
     LoginComponent,
     HeaderComponent,
+    InfiniteScrollComponent,
+    PollListFilterComponent,
+    VotePipe,
+    UserProfileComponent,
+    PollListContainerComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +61,8 @@ import {UserService} from './shared/user.service';
     MaterialModule,
     MatNativeDateModule,
     ReactiveFormsModule,
+    MatChipsModule,
+    MatMenuModule,
     MDBBootstrapModule.forRoot()
   ],
   bootstrap: [AppComponent],

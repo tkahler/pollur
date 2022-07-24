@@ -1,6 +1,6 @@
 package com.pollur.app;
 
-import com.pollur.app.domain.Poll;
+import com.pollur.app.domain.poll.Poll;
 import com.pollur.app.domain.User;
 import com.pollur.app.repository.PollRepository;
 import com.pollur.app.repository.UserRepository;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @SpringBootApplication
-@EnableJpaAuditing
+@EnableJpaAuditing(dateTimeProviderRef = "dateTimeProvider")
 public class Application {
 
 	@Autowired
@@ -38,8 +38,10 @@ public class Application {
 				});
 
 				for (User u: users) {
-					Poll poll = Poll.generateRandomPoll(u);
-					pollRepository.save(poll);
+					for(int i =0; i <= 10; i++) {
+						Poll poll = Poll.generateRandomPoll(u);
+						pollRepository.save(poll);
+					}
 				}
 			}
 		};

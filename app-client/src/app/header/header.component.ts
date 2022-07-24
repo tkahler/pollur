@@ -20,10 +20,10 @@ export class HeaderComponent {
   }
 
   login() {
-    this.modalService.open(LoginComponent.modalId, {isLogin: true});
+    this.modalService.open(LoginComponent.modalId, {isLogin: true, refreshOnSuccessfulLogin: true});
   }
 
   signUp() {
-    this.modalService.open(LoginComponent.modalId, {isLogin: false});
+    this.modalService.open(LoginComponent.modalId, {isLogin: false, refreshOnSuccessfulLogin: true});
   }
 }
