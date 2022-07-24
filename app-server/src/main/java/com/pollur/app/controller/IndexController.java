@@ -19,12 +19,17 @@ public class IndexController {
 
     @GetMapping(value = "/create-poll")
     public String createPoll() {
-        return "index";
+        return "index.html";
+    }
+
+    @GetMapping(value = "/discover")
+    public String discover() {
+        return "index.html";
     }
 
     @GetMapping(value = "/user/**")
     public String userPage() {
-        return "index";
+        return "index.html";
     }
 
 }

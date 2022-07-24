@@ -4,12 +4,22 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {PollVote} from '../models/poll-vote';
 import {map} from 'rxjs/operators';
+import {PollFilter} from '../models/poll-filter';
 
 
 @Injectable()
 export class PollService {
 
-  constructor(private http: HttpClient) { }
+  pollListFilter: PollFilter;
+  public pollList: Array<Poll> = [];
+
+  constructor(private http: HttpClient) {
+    this.pollListFilter = new PollFilter();
+  }
+
+  getListFilter() {
+    return this.pollListFilter;
+  }
 
   getPoll(pollId: string) {
     const httpOptions = {
@@ -20,25 +30,49 @@ export class PollService {
     );
   }
 
-  getPollsByPage(page: number): Observable<Array<Poll>>{
+  // adds to poll list using current filter
+  updatePollList(): Observable<Array<Poll>>{
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
 
-    const pageParam = 'page=' + page;
-    const timeFilter = 't=' + 'YEAR';
-    const queryParams = pageParam + '&' + timeFilter;
+    const pageParam = 'page=' + this.pollListFilter.page;
+
+    let timeFilter = '';
+    if (this.pollListFilter.timeFilter !== null) {
+      timeFilter = 't=' + this.pollListFilter.timeFilter.toUpperCase();
+    }
+
+
+    const sortBy = 'sortBy=' + this.pollListFilter.sortBy.toUpperCase();
+    let queryParams = pageParam + '&' + timeFilter + '&' + sortBy;
+
+    if (this.pollListFilter.author){
+      queryParams = queryParams + '&author=' + this.pollListFilter.author;
+    } else if (this.pollListFilter.participatedBy) {
+      queryParams = queryParams + '&participatedBy=' + this.pollListFilter.participatedBy;
+    }
 
     return this.http.get<Array<Poll>>( '/api/poll?' + queryParams, httpOptions).pipe(
-      map(dataList => dataList.map(data => new Poll().deserialize(data))
+      map(dataList => dataList.map(data => {
+        const poll = new Poll().deserialize(data);
+        this.pollList.push(poll);
+        return poll;
+      })
     ));
   }
 
-  savePoll(poll: Poll): Observable<Poll> {
+  refreshPollList() {
+    this.pollListFilter.page = 1;
+    this.pollList.length = 0;
+    return this.updatePollList();
+  }
+
+  createPoll(poll: Poll): Observable<Poll> {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
-    return this.http.post<Poll>('/api/poll/save', poll, httpOptions).pipe(
+    return this.http.post<Poll>('/api/poll', poll, httpOptions).pipe(
       map(data => new Poll().deserialize(data))
     );
 
@@ -66,7 +100,7 @@ export class PollService {
     };
     return this.http.get<PollVote>( '/api/poll/' + pollId + '/vote/', httpOptions).pipe(
       map(data => new PollVote().deserialize(data))
-    );;
+    );
   }
 
 }

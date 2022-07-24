@@ -1,12 +1,12 @@
 <mdb-navbar class="fixed-top" SideClass="navbar navbar-expand-lg navbar-light white ie-nav" [containerInside]="false">
   <mdb-navbar-brand>
-    <a class="logo navbar-brand text-blue" href="#"><strong>Pollur</strong></a>
+    <a class="logo navbar-brand text-blue" href="/discover"><strong>Pollur</strong></a>
   </mdb-navbar-brand>
   <links>
     <!-- Links -->
     <ul class="navbar-nav mr-auto">
       <li class="nav-item waves-light" mdbWavesEffect>
-        <a class="nav-link p-large"  routerLink="/home" routerLinkActive="active">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link p-large"  routerLink="/discover" routerLinkActive="active">Discover <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item waves-light" mdbWavesEffect>
         <a class="nav-link p-large"  routerLink="/create-poll" routerLinkActive="active">Create Poll</a>
@@ -27,22 +27,19 @@
     </ul>
 
     <ul *ngIf="authService.userAuthenticated" class="navbar-nav ml-auto">
-      <li class="mr-1">
 
-        <span class="navbar-text">
-                {{authService.username}}
-          </span>
-      </li>
     </ul>
 
-    <ul  *ngIf="authService.userAuthenticated"  class="navbar-nav nav-flex-icons">
-
+    <ul  *ngIf="authService.userAuthenticated"  class="navbar-nav nav-flex-icons align-items-center">
+      <li class="nav-item waves-light" mdbWavesEffect>
+        <a class="nav-link p-large" [routerLink]="'/user/'+authService.username" routerLinkActive="active">u/{{authService.username}}</a>
+      </li>
       <li class="nav-item">
         <a class="nav-link">
           <div class="btn-group" mdbDropdown>
             <mdb-icon fas icon="user"  classInside="dropdown-toggle" id="nav-user-circle" mdbDropdownToggle></mdb-icon>
             <div class="dropdown-menu dropdown-menu-right dropdown-primary">
-              <a class="dropdown-item" href="/home" (click)="logout()">Log out</a>
+              <a class="dropdown-item" href="/discover" (click)="logout()">Log out</a>
             </div>
           </div>
         </a>

@@ -12,4 +12,6 @@ public class PollDTO {
     public Long popularity;
     public Long commentCount;
     public UserPollVoteDTO userPollVote;
+
+    public String createdDateTime;
 }

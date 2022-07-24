@@ -3,6 +3,13 @@ server:
   port : 8081
 
 spring:
+  spring:
+    datasource:
+      username: sa
+      password: devpassword
   h2:
     console:
       enabled: true
+      path: /h2
+
+

@@ -1,6 +1,7 @@
 package com.pollur.app.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.pollur.app.domain.poll.Poll;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 

@@ -11,6 +11,8 @@ export class Poll implements Deserializable {
   public id: string;
   public userPollVote: PollVote;
   public author: User;
+  public createdDateTime: string;
+  public popularity: string;
 
   constructor() {
   }
@@ -20,6 +22,15 @@ export class Poll implements Deserializable {
     this.userPollVote = new PollVote().deserialize(input.userPollVote);
     this.author = new User().deserialize(input.author);
     return this;
+  }
+
+  addOption(optionValue: string) {
+    this.optionValues.push('');
+    this.optionVotes.push(0);
+  }
+
+  removeOptionByIndex(index: number) {
+    this.optionValues.splice(index, 1);
   }
 
 
