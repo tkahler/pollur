@@ -66,7 +66,7 @@ public class PollController {
         if(timeFilter == null) {
             timeFilter = TimeFilterEnum.YEAR;
         }
-        Pageable pageRequest = PageRequest.of(page - 1, 3, Sort.by(sortBy.sortField).descending());
+        Pageable pageRequest = PageRequest.of(page - 1, 10, Sort.by(sortBy.sortField).descending());
         List<Poll> polls = new ArrayList<>();
 
         if(authorUsername != null) {
