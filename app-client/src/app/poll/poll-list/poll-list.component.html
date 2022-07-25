@@ -1,8 +1,4 @@
 <app-poll-list-filter [username]="this.username"></app-poll-list-filter>
-<div id="poll-list-container" *ngFor="let poll of this.pollList">
-  <app-poll-card [minimized]="this.minimized" [poll]="poll"></app-poll-card>
-</div>
-<div id="poll-spacer"></div>
-<app-infinite-scroll (scrolled)="loadNextPage()"></app-infinite-scroll>
-<div id="poll-spacer-after"></div>
+<app-poll-card *ngFor="let poll of this.pollList" [minimized]="this.minimized" [poll]="poll"></app-poll-card>
+<div infiniteScroll (scrolled)="loadNextPage()"> </div>
 

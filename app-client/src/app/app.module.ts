@@ -28,13 +28,13 @@ import {LoginService} from './login/login.service';
 import {AuthService} from './shared/auth.service';
 import {AuthInterceptor} from './shared/auth-interceptor';
 import {UserService} from './shared/user.service';
-import {InfiniteScrollComponent} from './shared/infinite-scroll.component';
 import {PollListFilterComponent} from './poll/poll-list/poll-list-filter.component';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatMenuModule} from '@angular/material/menu';
 import {VotePipe} from './shared/vote.pipe';
 import {UserProfileComponent} from './profile/user-profile.component';
 import {PollListContainerComponent} from './poll/poll-list/poll-list-container.component';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 
 
 @NgModule({
@@ -46,7 +46,6 @@ import {PollListContainerComponent} from './poll/poll-list/poll-list-container.c
     PollContainerComponent,
     LoginComponent,
     HeaderComponent,
-    InfiniteScrollComponent,
     PollListFilterComponent,
     VotePipe,
     UserProfileComponent,
@@ -63,6 +62,7 @@ import {PollListContainerComponent} from './poll/poll-list/poll-list-container.c
     ReactiveFormsModule,
     MatChipsModule,
     MatMenuModule,
+    InfiniteScrollModule,
     MDBBootstrapModule.forRoot()
   ],
   bootstrap: [AppComponent],
