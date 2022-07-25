@@ -33,9 +33,12 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
 	implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
 
+
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'mysql:mysql-connector-java'
 	runtimeOnly 'com.h2database:h2'
+	runtimeOnly group: 'org.postgresql', name: 'postgresql', version: '42.4.0'
+
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
