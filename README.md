@@ -41,9 +41,9 @@
 - Angular Front end
 - Material Design Bootstrap
 - Gradle
-- Embedded h2 db
+- Embedded h2 db for development
+- Amazon RDS with Postgresql DB in production
 - Deployed on AWS elastic beanstalk
 ## Backlog
 - Add comment section to individual polls
-- Use PostgreSQL for production DB instead of embedded h2
 - Bootstrap production database with polls containing various created date times.
